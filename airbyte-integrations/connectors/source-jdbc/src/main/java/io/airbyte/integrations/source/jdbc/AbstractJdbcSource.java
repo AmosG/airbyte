@@ -359,6 +359,8 @@ public abstract class AbstractJdbcSource<Datatype> extends AbstractRelationalDbS
   }
 
   protected DataSource createDataSource(final JsonNode config) {
+    LOGGER.info("myprint createDataSource: {}",String.valueOf(config));
+
     final JsonNode jdbcConfig = toDatabaseConfig(config);
     final DataSource dataSource = DataSourceFactory.create(
         jdbcConfig.has(JdbcUtils.USERNAME_KEY) ? jdbcConfig.get(JdbcUtils.USERNAME_KEY).asText() : null,
@@ -373,6 +375,7 @@ public abstract class AbstractJdbcSource<Datatype> extends AbstractRelationalDbS
 
   @Override
   public JdbcDatabase createDatabase(final JsonNode config) throws SQLException {
+    LOGGER.info("myprint createDatabase: {}",String.valueOf(config));
     final DataSource dataSource = createDataSource(config);
     final JdbcDatabase database = new StreamingJdbcDatabase(
         dataSource,
